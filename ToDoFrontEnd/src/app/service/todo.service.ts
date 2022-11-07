@@ -18,8 +18,11 @@ export class TodoService {
   }
 
   public create(todoItem: ToDoItem): void {
-    this.todoApi.create(todoItem)
-    // this.todoStore.create(todoItem);
+    this.todoApi.create(todoItem).subscribe({
+      next: Response => {},
+      error: error => this.errorMessage = error.errorMessage
+    })
+
   }
 
   public update(updateTodoItem: ToDoItem): void {
