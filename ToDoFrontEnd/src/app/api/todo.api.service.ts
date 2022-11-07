@@ -13,4 +13,8 @@ export class TodoApiService {
   create(todoItem: ToDoItem): Observable<void> {
     return this.http.post<void>('https://localhost:5001/ToDos', todoItem)
   }
+
+  getAll(): Observable<ToDoItem[]> {
+    return this.http.get<ToDoItem[]>('https://localhost:5001/ToDos')
+  }
 }

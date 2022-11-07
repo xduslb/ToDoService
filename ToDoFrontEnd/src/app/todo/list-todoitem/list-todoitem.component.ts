@@ -10,15 +10,16 @@ import { TodoService } from '../../service/todo.service';
 })
 export class ListTodoitemComponent implements OnInit {
 
-  public get toDoItems(): ToDoItem[] {
-    return this.todoService.todoItems;
-  }
+  public todoItems: ToDoItem[] = [new ToDoItem(0, '', '', false)];
 
   constructor(private todoService: TodoService,
               private router: Router) {
   }
 
   ngOnInit(): void {
+    this.todoService.getAllTodoItems().subscribe({
+      next: response => this.todoItems = response
+    });
   }
 
   public detail(id: number): void {
