@@ -19,16 +19,12 @@ export class TodoService {
     return this.todoApi.getAll();
   }
 
-  public create(todoItem: ToDoItem): void {
-    this.todoApi.create(todoItem).subscribe({
-      next: Response => '',
-      error: error => this.errorMessage = error.errorMessage
-    })
-
+  public create(todoItem: ToDoItem): Observable<ToDoItem> {
+    return this.todoApi.create(todoItem);
   }
 
-  public update(updateTodoItem: ToDoItem): void {
-    this.todoStore.update(updateTodoItem);
+  public update(updateTodoItem: ToDoItem): Observable<ToDoItem> {
+    return this.todoApi.update(updateTodoItem);
   }
 
   public delete(id: number): void {
@@ -51,7 +47,7 @@ export class TodoService {
     return this._updatingTodoItem;
   }
 
-  public findById(id: number): ToDoItem {
-    return this.todoStore.findById(id);
+  public findById(id: number): Observable<ToDoItem> {
+    return this.todoApi.findById(id);
   }
 }

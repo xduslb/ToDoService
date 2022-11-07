@@ -13,7 +13,7 @@ describe('TodoService', () => {
   let httpClientSpy: any;
 
   beforeEach(() => {
-    httpClientSpy =  jasmine.createSpyObj('HttpClient', ['post']);
+    httpClientSpy =  jasmine.createSpyObj('HttpClient', ['post', 'get', 'put']);
     todoStoreService = new TodoStoreService();
     TestBed.configureTestingModule({
       providers:[
@@ -45,9 +45,31 @@ describe('TodoService', () => {
     const todoItem = new ToDoItem(1, 'title', 'description', true);
     httpClientSpy.post.and.returnValue(throwError(() => ({ errorMessage: 'create failed.' })));
     // when
-    service.create(todoItem);
-    // then
-    expect(service.errorMessage).toEqual('create failed.');
+    service.create(todoItem).subscribe({
+      next: _ => { },
+      // then
+      error: error => expect(error.errorMessage).toEqual('create failed.')
+    });
   });
 
+  it('should create todoItem via mockHttp post', () => {
+    // given
+    httpClientSpy.get.and.returnValue(of({})
+    )
+    // when 
+    service.findById(0);
+    // then
+    expect(httpClientSpy.get).toHaveBeenCalledWith('https://localhost:5001/ToDos/0');
+  });
+
+  it('should response error when get by id failed', () => {
+    // given
+    httpClientSpy.get.and.returnValue(throwError(() => ({ errorMessage: 'get failed.' })));
+    // when
+    service.findById(0).subscribe({
+      next: _ => { },
+      // then
+      error: error => expect(error.errorMessage).toEqual('get failed.')
+    });
+  });
 });

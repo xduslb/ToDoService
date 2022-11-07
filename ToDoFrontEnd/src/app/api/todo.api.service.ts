@@ -8,13 +8,22 @@ import { ToDoItem } from '../model/ToDoItem';
 })
 export class TodoApiService {
 
+  private BASE_URL: string = 'https://localhost:5001/ToDos'
   constructor(private http: HttpClient) { }
 
-  create(todoItem: ToDoItem): Observable<void> {
-    return this.http.post<void>('https://localhost:5001/ToDos', todoItem)
+  create(todoItem: ToDoItem): Observable<ToDoItem> {
+    return this.http.post<ToDoItem>(this.BASE_URL, todoItem)
   }
 
   getAll(): Observable<ToDoItem[]> {
-    return this.http.get<ToDoItem[]>('https://localhost:5001/ToDos')
+    return this.http.get<ToDoItem[]>(this.BASE_URL)
+  }
+
+  update(updateTodoItem: ToDoItem): Observable<ToDoItem> {
+    return this.http.put<ToDoItem>(this.BASE_URL, updateTodoItem)
+  }
+
+  findById(id: number): Observable<ToDoItem> {
+    return this.http.get<ToDoItem>(this.BASE_URL +'/'+ String(id))
   }
 }
