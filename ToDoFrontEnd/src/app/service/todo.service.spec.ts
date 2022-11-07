@@ -52,7 +52,7 @@ describe('TodoService', () => {
     });
   });
 
-  it('should create todoItem via mockHttp post', () => {
+  it('should create todoItem via mockHttp get', () => {
     // given
     httpClientSpy.get.and.returnValue(of({})
     )
@@ -70,6 +70,29 @@ describe('TodoService', () => {
       next: _ => { },
       // then
       error: error => expect(error.errorMessage).toEqual('get failed.')
+    });
+  });
+
+  it('should update todoItem via mockHttp put', () => {
+    // given
+    const todoItem = new ToDoItem(1, 'title', 'description', true);
+    httpClientSpy.get.and.returnValue(of({})
+    )
+    // when 
+    service.update(todoItem);
+    // then
+    expect(httpClientSpy.put).toHaveBeenCalledWith('https://localhost:5001/ToDos', todoItem);
+  });
+
+  it('should update error when get by id failed', () => {
+    // given
+    const todoItem = new ToDoItem(1, 'title', 'description', true);
+    httpClientSpy.put.and.returnValue(throwError(() => ({ errorMessage: 'update failed.' })));
+    // when
+    service.update(todoItem).subscribe({
+      next: _ => { },
+      // then
+      error: error => expect(error.errorMessage).toEqual('update failed.')
     });
   });
 });
