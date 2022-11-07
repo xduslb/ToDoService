@@ -6,7 +6,6 @@ import { TodoStoreService } from './todo-store.service';
   providedIn: 'root'
 })
 export class TodoService {
-
   private _selectedTodoItem: ToDoItem = {} as ToDoItem;
   private _updatingTodoItem: ToDoItem = {} as ToDoItem;
   constructor(private todoStore: TodoStoreService) {
@@ -42,5 +41,9 @@ export class TodoService {
 
   public currentUpdatingTodoItem(): ToDoItem {
     return this._updatingTodoItem;
+  }
+
+  public findById(id: number): ToDoItem {
+    return this.todoStore.findById(id);
   }
 }
