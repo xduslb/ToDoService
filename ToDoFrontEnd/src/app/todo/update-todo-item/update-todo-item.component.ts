@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../../service/todo.service';
 import { ToDoItem } from '../../model/ToDoItem';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-todo-item',
@@ -13,11 +14,13 @@ export class UpdateTodoItemComponent implements OnInit {
     return this.todoService.currentUpdatingTodoItem();
   }
 
-  constructor(public todoService: TodoService) { }
+  constructor(public todoService: TodoService,
+              private router: Router) { }
 
   ngOnInit(): void { }
 
   update(): void {
     this.todoService.update(this.todoItem);
+    this.router.navigate(['todos'])
   }
 }
