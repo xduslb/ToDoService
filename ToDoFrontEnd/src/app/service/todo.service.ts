@@ -27,8 +27,8 @@ export class TodoService {
     return this.todoApi.update(updateTodoItem);
   }
 
-  public delete(id: number): void {
-    this.todoStore.delete(id);
+  public delete(id: number): Observable<void> {
+    return this.todoApi.delete(id);
   }
 
   public selectTodoItem(id: number): void {

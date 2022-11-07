@@ -33,6 +33,10 @@ export class ListTodoitemComponent implements OnInit {
   }
 
   public doDelete(id: number): void {
-    this.todoService.delete(id);
+    this.todoService.delete(id).subscribe({
+      next: _ => {
+        location.reload()
+      }
+    });
   }
 }

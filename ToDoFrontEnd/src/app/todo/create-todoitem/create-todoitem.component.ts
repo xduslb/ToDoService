@@ -21,8 +21,8 @@ export class CreateTodoitemComponent implements OnInit {
   }
 
   public createToDoItem(): void {
-    this.todoService.create(this.toDoItem);
-    this.router.navigate(['todos'])
+    this.todoService.create(this.toDoItem).subscribe({
+      next: _ => {this.router.navigate(['todos'])}
+    });
   }
-
 }

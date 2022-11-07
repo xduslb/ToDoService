@@ -8,6 +8,7 @@ import { ToDoItem } from '../model/ToDoItem';
 })
 export class TodoApiService {
 
+
   private BASE_URL: string = 'https://localhost:5001/ToDos'
   constructor(private http: HttpClient) { }
 
@@ -25,5 +26,9 @@ export class TodoApiService {
 
   findById(id: number): Observable<ToDoItem> {
     return this.http.get<ToDoItem>(this.BASE_URL +'/'+ String(id))
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(this.BASE_URL + `?id=${id}`)
   }
 }
